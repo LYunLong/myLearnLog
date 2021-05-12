@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+</head>
+<body>
+
+
+
+<script>
+    let target = { a:1 }
+    const p = new Proxy(target, {
+        get (target, name) {
+            //return p[name]      //死循环的迷惑尝试   a.x 下返回 a.x 。。。
+            return "{{"+ target[name] +"}}"
+            // return true    返回true就是true
+        },
+        set(target, p, value, receiver) {
+            if (p === 'a') {
+                if (!Number.isInteger(value)) {
+                    alert('not integer')
+                    return false;       //此处可以throw也可以return，跳出方法即可
+                }
+                if (value > 200) {
+                    alert('>200')
+                    return false
+                }
+            }
+            target[p] = value
+
+            return true //测试此处可有可无，上面赋值为主
+        }
+    })
+
+    console.info(p.a)             //     {{1}}
+    console.info(target.a)        //代理中的方法不影响原对象
+
+    target.a = 2199    //迷之尝试  {{2199}}
+    p.a = 199
+    console.info(p.a)            //       {{199}}
+    console.info(target.a)         //    199 代理中的行为（选择性）影响原对象*
+</script>
+</body>
+</html>
