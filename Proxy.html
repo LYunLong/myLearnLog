@@ -6,41 +6,103 @@
     <title></title>
 </head>
 <body>
+<!--<script>-->
+<!--    let target = { a:1 }-->
+<!--    const p = new Proxy(target, {-->
+<!--        get (target, name) {-->
+<!--            //return p[name]      //死循环的迷惑尝试   a.x 下返回 a.x 。。。-->
+<!--            return "{{"+ target[name] +"}}"-->
+<!--            // return true    返回true就是true-->
+<!--        },-->
+<!--        set(target, p, value, receiver) {-->
+<!--            if (p === 'a') {-->
+<!--                if (!Number.isInteger(value)) {-->
+<!--                    alert('not integer')-->
+<!--                    return false;       //此处可以throw也可以return，跳出方法即可-->
+<!--                }-->
+<!--                if (value > 200) {-->
+<!--                    alert('>200')-->
+<!--                    return false-->
+<!--                }-->
+<!--            }-->
+<!--            target[p] = value-->
 
+<!--            return true //测试此处可有可无，上面赋值为主-->
+<!--        }-->
+<!--    })-->
 
+<!--    console.info(p.a)             //     {{1}}-->
+<!--    console.info(target.a)        //代理中的方法不影响原对象-->
 
+<!--    target.a = 2199    //迷之尝试  {{2199}}-->
+<!--    p.a = 199-->
+<!--    console.info(p.a)            //       {{199}}-->
+<!--    console.info(target.a)         //    199 代理中的行为（选择性）影响原对象*-->
+<!--</script>-->
+<!--base end-->
 <script>
-    let target = { a:1 }
-    const p = new Proxy(target, {
-        get (target, name) {
-            //return p[name]      //死循环的迷惑尝试   a.x 下返回 a.x 。。。
-            return "{{"+ target[name] +"}}"
-            // return true    返回true就是true
-        },
-        set(target, p, value, receiver) {
-            if (p === 'a') {
-                if (!Number.isInteger(value)) {
-                    alert('not integer')
-                    return false;       //此处可以throw也可以return，跳出方法即可
-                }
-                if (value > 200) {
-                    alert('>200')
-                    return false
-                }
-            }
-            target[p] = value
+    // function extend(sup, base) {
+    //     var descriptor = Object.getOwnPropertyDescriptor(
+    //         base.prototype, "constructor"
+    //     );
+    //     base.prototype = Object.create(sup.prototype);
+    //     var handler = {
+    //         construct: function(target, args) {
+    //             var obj = Object.create(base.prototype);
+    //             this.apply(target, obj, args);
+    //             return obj;
+    //         },
+    //         apply: function(target, that, args) {
+    //             sup.apply(that, args);
+    //             base.apply(that, args);
+    //         }
+    //     };
+    //     var proxy = new Proxy(base, handler);
+    //     descriptor.value = proxy;
+    //     Object.defineProperty(base.prototype, "constructor", descriptor);
+    //     return proxy;
+    // }
+    //
+    // var Person = function (name) {
+    //     this.name = name
+    // };
+    //
+    // var Boy = extend(Person, function (name, age) {
+    //     this.age = age;
+    // });
+    //
+    // Boy.prototype.sex = "M";
+    //
+    // var Peter = new Boy("Peter", 13);
+    // console.log(Peter.sex);  // "M"
+    // console.log(Peter.name); // "Peter"
+    // console.log(Peter.age);  // 13
 
-            return true //测试此处可有可无，上面赋值为主
-        }
-    })
 
-    console.info(p.a)             //     {{1}}
-    console.info(target.a)        //代理中的方法不影响原对象
 
-    target.a = 2199    //迷之尝试  {{2199}}
-    p.a = 199
-    console.info(p.a)            //       {{199}}
-    console.info(target.a)         //    199 代理中的行为（选择性）影响原对象*
+    // var a = new Proxy({}, {
+    //     a: 1,
+    //     valueOf: function (target, key) {
+    //         target[key] ++;
+    //     }
+    // })
+    //
+    // var b = {
+    //     b: 1,
+    //     valueOf: function () {
+    //         return b.b++;
+    //     }
+    // }
+    //
+    // if (b==1 && b==2 && b==3) {
+    //     console.info(133)
+    // }
+
+
+    var angery
+
+
+
 </script>
 </body>
 </html>

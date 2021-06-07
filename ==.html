@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+</head>
+<body>
+<script>
+
+    var a = new Proxy({}, {     //不好用  因为代理的valueOf是返回代理本身
+        a: 1,
+        value: function () {
+            a.a++;
+        }
+    })
+
+    var b = {
+        b: 1,
+        valueOf: function () {
+            return b.b++;
+        }
+    }
+
+    if (b==1 && b==2 && b==3) {
+        console.info(133)
+    }
+
+    // console.info('2'>'10')  //true
+    // console.info('abc'> 'a')   //true
+    // console.info('abc'> 'b')   //false
+    // console.info('abc'> 'aad')  //true
+    //诸位比较unicode，相等后推，遇到不满足直接false，遇到满足直接true，后边全舍去
+
+    // console.info(undefined === undefined)
+    // console.info(null == false)
+
+    console.info({a:1} == {a:1})
+
+</script>
+</body>
+</html>

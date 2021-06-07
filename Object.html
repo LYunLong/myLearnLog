@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+</head>
+<body>
+<script>
+
+
+
+    //assign
+    const target = {a: 1, b: {}}
+
+    const proxyTarget = new Proxy(target, {
+        get: function (target, key) {
+            return target[key]+';'
+        },
+        set(target, key, value) {
+            target[key] = value + '?'
+            return true
+        }
+    })
+
+    const source = {b: 4, c: function () {
+            alert(1)
+        }, d: {e:2}}
+
+    const returnedTarget = Object.assign(proxyTarget, source)
+
+    // console.info(target, returnedTarget)
+
+
+    //create
+
+    const createS = {c: 1}
+
+    createS.__proto__.b = 2
+
+    const createA = Object.create(createS)
+    const createB = Object.create(createS)
+
+    createA.__proto__ = createS
+
+    console.info(createA.b)
+    console.info(createA.__proto__ === createB.__proto__)
+
+
+
+</script>
+</body>
+</html>

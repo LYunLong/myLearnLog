@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+</head>
+<body>
+<script>
+
+    //冒泡排序
+
+    var maopao = [5,2,1,6,3,2,5,7,2,9]
+
+    var maopaoi = maopao.length
+
+    while (maopaoi>1) {
+        for (var i = 0;i<maopaoi;i++) {
+            if (maopao[i]>maopao[i+1]) {
+                var cache = maopao[i]
+                maopao[i] = maopao[i+1]
+                maopao[i+1] = cache
+            }
+        }
+        maopaoi--
+    }
+
+    console.info(maopao)
+
+</script>
+</body>
+</html>
