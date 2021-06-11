@@ -8,6 +8,15 @@
 <body>
 <script>
 
+    // 通用方法
+
+    function TreeNode (val, left, right) {
+        this.val = (val === undefined? 0 : val)
+        this.left = (left === undefined? null : left)
+        this.right = (right === undefined? null : right)
+    }
+
+
     //冒泡排序
 
     var maopao = [5,2,1,6,3,2,5,7,2,9]
@@ -25,7 +34,151 @@
         maopaoi--
     }
 
-    console.info(maopao)
+    // console.info(maopao)
+
+
+    //二叉树最大路径和
+
+    var a_a = new TreeNode(15)
+    var a_b = new TreeNode(7)
+    var a_c = new TreeNode(20, a_a, a_b)
+    var a_d = new TreeNode(9)
+    var a_e = new TreeNode(-10, a_d, a_c)
+
+
+    // var a_e = new TreeNode(0)
+
+    var a_anc = Number.MIN_SAFE_INTEGER
+
+    var a_node_link = []
+
+    function a_getNodeMaxPath(node) {
+        if (node == null) {
+            return 0
+        }
+
+        var left = (a_getNodeMaxPath(node.left).val >0? a_getNodeMaxPath(node.left): {val:0})
+
+        var right = (a_getNodeMaxPath(node.right).val >0? a_getNodeMaxPath(node.right): {val:0})
+
+        var sum = left.val+ right.val+ node.val
+
+        sum > a_anc? (function(){
+                a_anc = sum
+                a_node_link = [left.path, node, right.path]
+            })(): ''
+
+        a_anc = Math.max(a_anc, left.val+ right.val+ node.val)
+
+        // var left = Math.max(0, a_getNodeMaxPath(node.left).val)
+        // var right = Math.max(0, a_getNodeMaxPath(node.right).val)
+        //
+        // a_anc = Math.max(a_anc, left+right+node.val)
+        return {
+            val: Math.max(left.val, right.val) + node.val,
+            path: [node, (left.val>=right.val? left.path: right.path)]
+        }
+    }
+    a_getNodeMaxPath(a_e)
+
+    // console.info(a_anc, a_node_link)
+
+
+    //对称二叉树
+
+    var b_a = new TreeNode(3)
+    var b_b = new TreeNode(4)
+    var b_c = new TreeNode(5)
+    var b_d = new TreeNode(6)
+    var b_e = new TreeNode(2, b_b, null)
+    var b_f = new TreeNode(3, b_c, b_d)
+    var b_g = new TreeNode(1, b_e, b_f)
+
+    console.info(b_g)
+
+    // var b_duichen = true
+    // function b_judge(leftNode, rightNode) {
+    //     if (leftNode  == null && rightNode == null) {
+    //         return
+    //     }
+    //     if (leftNode ==null || rightNode==null) {
+    //         b_duichen = false
+    //         return;
+    //     }
+    //     if (leftNode.val === rightNode.val) {
+    //         b_judge(leftNode.left, rightNode.right)
+    //         b_judge(leftNode.right, rightNode.left)
+    //     }else {
+    //         b_duichen = false
+    //     }
+    // }
+    // b_judge(b_g.left, b_g.right)
+    //
+    // console.info(b_duichen)
+
+    // function proOrderTraveralWithStack (node) {
+    //     var a = node;
+    //     var b = []
+    //     while ( a!= null || b.length) {
+    //         while (a != null) {
+    //             console.info(a.val+' ')
+    //             b.push(a)
+    //             a = a.left
+    //         }
+    //         if (b.length) {
+    //             a = b.pop();
+    //             a = a.right;
+    //         }
+    //     }
+    // }
+    // proOrderTraveralWithStack(b_g)
+
+
+
+    function b_f_n(node) {
+        var nodeCache = node;
+        var historyPath = [];
+        while(nodeCache!=null || historyPath.length) {
+            while(nodeCache != null) {
+                // console.info(nodeCache.val)  // 前序遍历二叉树
+                historyPath.push(nodeCache)
+                nodeCache = nodeCache.left;
+            }
+            if (historyPath.length) {
+                nodeCache = historyPath.pop();
+                console.info(nodeCache.val)    // 中序
+                nodeCache = nodeCache.right
+            }
+        }
+    }
+
+    // b_f_n(b_g)
+
+    function b_b_n(node) {
+        var nodeCache = node;
+        var nodeLast = null;
+        var historyPath = [];
+        while(nodeCache!=null || historyPath.length) {
+            while(nodeCache != null) {
+                historyPath.push(nodeCache)
+                nodeCache = nodeCache.left;
+            }
+            if (historyPath.length) {
+                nodeCache = historyPath.pop();
+
+                if ( nodeCache.right == null || nodeCache.right === nodeLast ) {
+                    console.info(nodeCache.val)    // 后序
+                    nodeLast = nodeCache;
+                    nodeCache = null
+                }else {
+                    historyPath.push(nodeCache)
+                    nodeCache = nodeCache.right
+                }
+            }
+        }
+    }
+
+    b_b_n(b_g)
 
 </script>
 </body>
