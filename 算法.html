@@ -178,7 +178,26 @@
         }
     }
 
-    b_b_n(b_g)
+    // b_b_n(b_g)
+
+    function b_levelOrder(node) {
+
+        var queue = [];
+        queue.push(node)
+
+        while (queue.length) {
+            node = queue.shift();
+            console.info(node.val)
+            if (node.left!=null) {
+                queue.push(node.left)
+            }
+            if (node.right!=null) {
+                queue.push(node.right)
+            }
+        }
+    }
+
+    b_levelOrder(b_g)
 
 </script>
 </body>
