@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title></title>
+</head>
+<body>
+
+<script>
+
+    // 通用方法
+
+    function TreeNode (val, left, right) {
+        this.val = (val === undefined? 0 : val)
+        this.left = (left === undefined? null : left)
+        this.right = (right === undefined? null : right)
+    }
+
+    var a_a = new TreeNode(15)
+    var a_b = new TreeNode(7)
+    var a_c = new TreeNode(20, a_a, a_b)
+    var a_d = new TreeNode(9)
+    var a_e = new TreeNode(-10, a_d, a_c)
+
+    // var b_a = new TreeNode(3)
+    var b_b = new TreeNode(4)
+    var b_c = new TreeNode(5)
+    var b_d = new TreeNode(6)
+    var b_e = new TreeNode(2, b_b, null)
+    var b_f = new TreeNode(3, b_c, b_d)
+    var b_g = new TreeNode(1, b_e, b_f)
+
+
+    // var c_a = new TreeNode(3)
+    var c_b = new TreeNode(3)
+    // var c_c = new TreeNode(3)
+    var c_d = new TreeNode(3)
+    var c_e = new TreeNode(2, c_b, null)
+    var c_f = new TreeNode(2, null, c_d)
+    var c_g = new TreeNode(1, c_e, c_f)
+
+    var node = b_g
+    var queue = []
+
+    queue.push(node)
+    while (queue.length) {
+        node = queue.shift()
+        console.info(node.val)
+        if (node.left!=null) {
+            queue.push(node.left)
+        }
+        if (node.right!=null) {
+            queue.push(node.right)
+        }
+    }
+
+</script>
+</body>
+</html>

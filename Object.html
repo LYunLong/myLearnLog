@@ -8,45 +8,159 @@
 <body>
 <script>
 
+    // 原型
+
+    // console.info(Object.__proto__)
+    //
+    // var a = {b:2}
+    //
+    // Object.__proto__ = a
 
 
-    //assign
-    const target = {a: 1, b: {}}
-
-    const proxyTarget = new Proxy(target, {
-        get: function (target, key) {
-            return target[key]+';'
-        },
-        set(target, key, value) {
-            target[key] = value + '?'
-            return true
-        }
-    })
-
-    const source = {b: 4, c: function () {
-            alert(1)
-        }, d: {e:2}}
-
-    const returnedTarget = Object.assign(proxyTarget, source)
+    ////////////////////////////////assign
+    // const target = {a: 1, b: {}}
+    //
+    // const proxyTarget = new Proxy(target, {
+    //     get: function (target, key) {
+    //         return target[key]+';'
+    //     },
+    //     set(target, key, value) {
+    //         target[key] = value + '?'
+    //         return true
+    //     }
+    // })
+    //
+    // const source = {b: 4, c: function () {
+    //         alert(1)
+    //     }, d: {e:2}}
+    //
+    // const returnedTarget = Object.assign(proxyTarget, source)
 
     // console.info(target, returnedTarget)
 
 
-    //create
+    /////////////////////////create
 
-    const createS = {c: 1}
+    // const createS = {c: 1}
+    //
+    // createS.__proto__.b = 2
+    //
+    // const createA = Object.create(createS)
+    // const createB = Object.create(createS)
+    //
+    // createA.__proto__ = createS
 
-    createS.__proto__.b = 2
-
-    const createA = Object.create(createS)
-    const createB = Object.create(createS)
-
-    createA.__proto__ = createS
-
-    console.info(createA.b)
-    console.info(createA.__proto__ === createB.__proto__)
+    // console.info(createA.b)
+    // console.info(createA.__proto__ === createB.__proto__)
 
 
+    //////////////////////////defineProperties，
+    // entries  返回自有属性map
+    // fromEntries  通过map返回对象
+
+    // var defineProperties = {}
+    // defineProperties.__proto__.protoFunc = function () {
+    //     alert('pf')
+    // }
+    // Object.defineProperties(defineProperties, {
+    //     propertyA: {
+    //         value: 'p1',
+    //         enumerable: true,
+    //         writable: true
+    //     },
+    //     propertyB: {
+    //         value: 'p2',
+    //         enumerable: false,
+    //         writable: true
+    //     },
+    //     propertyC: {
+    //         value: 'p3',
+    //         enumerable: true,
+    //         writable: false
+    //     },
+    // })
+    //
+    // console.info(defineProperties)
+    // console.info(defineProperties.valueOf())
+    // console.info(defineProperties.toString())
+    // for (var i in defineProperties) {
+    //     // console.info(i)
+    // }
+    // for (var i of Object.entries(defineProperties)) {
+    //     if (i[0] === 'propertyA') {
+    //         console.info(i[1])
+    //     }
+    // }
+
+
+    /////////////////// Map
+    // var map1 = new Map([["a", 1] ,["b", 2]])
+    //
+    // console.info(map1.set('a', 6))
+
+
+    ///////////////////// freeze
+
+    // Object.prototype.sourceFunc = function () {
+    //     alert(1)
+    // }
+    // // var a = {b:1}
+    // var a = new Object({b:1})
+    //
+    // var b = {c:1}
+    // var c = {c:2}
+    //
+    // a.__proto__ = b
+    //
+    // Object.freeze(a)
+    //
+    // a.__proto__ = b
+    //
+    //
+    // Object.prototype.sourceFunc = function () {
+    //     alert(2)
+    // }
+    //
+    // console.info(a.c)
+    //
+    // a.sourceFunc()
+
+    //getOwnPropertyDescriptor
+
+    // let a = {
+    //     property1: 42,
+    //     p2: 2
+    // }
+    // const b = Object.getOwnPropertyDescriptor(a, 'property1')
+    // console.info(b)
+    //
+    // console.info(Object.getOwnPropertyDescriptors(a))
+
+    //////////////////////////getOwnPropertyDescriptors
+
+    function superClass() {}
+    superClass.prototype = {
+        a: 1,
+        do: function (a) {
+            alert(a)
+        }
+    }
+
+    function subClass() {
+        // this.a = 5
+    }
+    subClass.prototype = Object.create(subClass.prototype, Object.getOwnPropertyDescriptors({
+        // a: 2,
+        b: 3
+    }))
+
+    var cc = new subClass()
+
+    console.info(typeof cc)
+    console.info(cc.toString())
+    console.info(cc)
+    console.info(cc.a)
+    console.info(cc.do)
 
 </script>
 </body>
